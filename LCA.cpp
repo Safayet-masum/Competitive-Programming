@@ -6,6 +6,20 @@ using namespace std;
 #define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 vector<long long>v[100005],vc;
 long long x[200005][40],mp[100005],ml[100005],nd,pos[100005];
+long long BigMod(long long B,long long P,long long M)
+{
+    long long R=1;
+    while(P>0)
+    {
+        if(P%2==1)
+        {
+            R=(R*B)%M;
+        }
+        P/=2LL;
+        B=(B*B)%M;
+    }
+    return R;
+}
 void build(long long n)
 {
     long long a,i,j,k,b,c;
@@ -66,6 +80,16 @@ void dfs(long long p, long long q)
 
 }
 
+long long lca(long long a, long long b)
+{
+    a=pos[mp[a]];
+    b=pos[mp[b]];
+    if(a>b)
+        swap(a,b);
+    long long c=query(a,b);
+    return ml[c];
+}
+
 int main()
 {
     //fastio;
@@ -87,11 +111,7 @@ int main()
     cin>>q;
     while(q--){
         cin>>a>>b;
-        a=pos[mp[a]];
-        b=pos[mp[b]];
-        if(a>b)swap(a,b);
-        c=query(a,b);
-        cout<<ml[c]<<endl;
+        cout<<lca(a,b)<<endl;
     }
 
     return 0;
